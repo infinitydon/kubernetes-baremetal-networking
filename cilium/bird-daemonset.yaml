@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+metadata:
+  name: bird-router
+  namespace: kube-system
+  labels:
+    k8s-app: bird-router
+spec:
+  selector:
+    matchLabels:
+      k8s-app: bird-router
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: bird-router
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      hostNetwork: true
+      containers:
+        - name: bird-router
+          image: registry.gitlab.com/infinitydon/registry/bird:v2.0.7
+          command: ["/bin/sh", "-c"]
+          args:
+          - mkdir -p /etc/bird/;
+            cp -rf /bird.conf /etc/bird/;
+            POD_CIDR=$(ip route | grep cilium_host | head -1 | awk '{print $1}');
+            sed -i "s/{{ NODE_IP }}/${POD_IP}/g" /etc/bird/bird.conf;
+            sed -i "s/{{ NODE_ASN }}/${LOCAL_ASN}/g" /etc/bird/bird.conf;
+            sed -i "s+{{ POD_CIDR }}+${POD_CIDR}+g" /etc/bird/bird.conf;
+            sed -i "s/{{ NEIGHBOR_0_IP }}/${VYOS_ROUTER_IP}/g" /etc/bird/bird.conf;
+            sed -i "s/{{ NEIGHBOR_0_ASN }}/${BGP_VYOS_ASN}/g" /etc/bird/bird.conf;
+            bird -c /etc/bird/bird.conf -d
+          env:
+          - name: VYOS_ROUTER_IP
+            value: "10.10.100.1"
+          - name: BGP_VYOS_ASN
+            value: "64500"
+          - name: LOCAL_ASN
+            value: "64500"
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                 fieldPath: status.podIP
+          volumeMounts:
+          - mountPath: /bird.conf
+            name: bird-config
+            subPath: "bird.conf"
+          securityContext:
+            privileged: true
+      volumes:
+      - name: bird-config
+        configMap:
+          name: bird-configuration
