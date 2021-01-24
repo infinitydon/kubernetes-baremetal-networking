@@ -17,5 +17,5 @@ spec:
         k8s.v1.cni.cncf.io/networks: '[ { "name": "ipvlan-def-1" } ]'        
     spec:
       containers:
-      - image: nginx:stable-alpine
+      - image: nginx
         name: nginx
