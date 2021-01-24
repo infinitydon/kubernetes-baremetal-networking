@@ -1,4 +1,5 @@
 apiVersion: apps/v1
+kind: DaemonSet
 metadata:
   name: bird-router
   namespace: kube-system
