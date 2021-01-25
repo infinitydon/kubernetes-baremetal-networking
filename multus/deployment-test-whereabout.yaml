@@ -14,7 +14,7 @@ spec:
       labels:
         app: test-1
       annotations:
-        k8s.v1.cni.cncf.io/networks: '[ { "name": "ipvlan-def-1-srb" } ]'        
+        k8s.v1.cni.cncf.io/networks: '[ { "name": "ipvlan-def-1-srb-wab" } ]'        
     spec:
       nodeSelector:
         kubernetes.io/hostname: k8s-worker-1
@@ -38,7 +38,7 @@ spec:
       labels:
         app: test-2
       annotations:
-        k8s.v1.cni.cncf.io/networks: '[ { "name": "ipvlan-def-1-srb" } ]'        
+        k8s.v1.cni.cncf.io/networks: '[ { "name": "ipvlan-def-1-srb-wab" } ]'        
     spec:
       nodeSelector:
         kubernetes.io/hostname: k8s-worker-2
