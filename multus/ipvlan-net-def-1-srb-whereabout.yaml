@@ -13,10 +13,12 @@ spec:
        "mode": "l2",
        "ipam": {
         "type": "whereabouts",
-        "subnet": "172.18.0.0/24",
-        "exclude": [ "172.18.0.1" ]
+        "range": "172.30.0.0/24",
+        "range_start": "172.30.0.2",
+        "range_end": "172.30.0.50",
+        "gateway": "172.30.0.1"
           }
        },
-           { "type": "sbr" }
+       { "type": "sbr" }
        ]
     }'
