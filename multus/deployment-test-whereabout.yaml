@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-1
+  name: test-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-1
+  template:
+    metadata:
+      labels:
+        app: test-1
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[ { "name": "ipvlan-def-1-srb" } ]'        
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker-1
+      containers:
+      - image: registry.gitlab.com/infinitydon/registry/nginx-ubuntu-ip-tools
+        name: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-2
+  name: test-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-2
+  template:
+    metadata:
+      labels:
+        app: test-2
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[ { "name": "ipvlan-def-1-srb" } ]'        
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker-2
+      containers:
+      - image: registry.gitlab.com/infinitydon/registry/nginx-ubuntu-ip-tools
+        name: nginx
