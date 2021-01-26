@@ -1,0 +1,25 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: brdige-sbr-wab
+spec:
+  config: '{
+      "cniVersion": "0.3.1",
+      "plugins":
+       [
+        {
+       "type": "bridge",
+       "name": "mynet",
+       "bridge": "br0",
+       "forceAddress": false,
+       "ipam": {
+        "type": "whereabouts",
+        "range": "172.18.0.0/24",
+        "range_start": "172.18.0.2",
+        "range_end": "172.18.0.50",
+        "gateway": "172.18.0.1"
+          }
+       },
+       { "type": "sbr" }
+       ]
+    }'
