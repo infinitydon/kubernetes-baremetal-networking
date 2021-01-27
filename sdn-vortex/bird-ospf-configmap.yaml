@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bird-ospf-configuration
+data:
+  bird.conf: |
+    log syslog all;
+    router id {{ NODE_IP }};
+    protocol device {
+            scan time 10;           # Scan interfaces every 10 seconds
+    }
+    # Disable automatically generating direct routes to all network interfaces.
+    protocol direct {
+            disabled;               # Disable by default
+    }
+    # Forbid synchronizing BIRD routing tables with the OS kernel.
+    protocol kernel {
+            ipv4 {                    # Connect protocol to IPv4 table by channel
+                    import none;      # Import to table, default is import all
+                    export none;      # Export to protocol. default is export none
+            };
+    }
+ 
+    # OSPF
+    protocol ospf v2 {
+           area 0 {
+                   interface "net1" {
+                           type broadcast;         # Detected by default
+                           cost 10;                # Interface metric
+                           hello 10;                # Default hello perid 10 is too long
+                   };
+                   interface "dummy1" {
+                          stub yes;
+                   };			   
+           };
+    }
