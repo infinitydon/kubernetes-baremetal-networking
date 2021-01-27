@@ -42,7 +42,7 @@ spec:
       - name: init-network-client
         image: sdnvortex/network-controller:v0.4.9
         command: ["/go/bin/client"]
-        args: ["-s=unix:///tmp/vortex.sock", "-b=br0", "-n=net1", "-i=172.18.0.2/24"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b=br0", "-n=net1", "-i=172.18.0.3/24"]
         env:
         - name: POD_NAME
           valueFrom:
