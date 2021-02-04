@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: svcwatcher
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      danm.k8s.io: svcwatcher
+  template:
+    metadata:
+      annotations:
+        # Adapt to your own network environment!
+        danm.k8s.io/interfaces: |
+          [
+            {
+              "network":"flannel"
+            }
+          ]
+      labels:
+        danm.k8s.io: svcwatcher
+    spec:
+      serviceAccountName: svcwatcher
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        "node-role.kubernetes.io/master": ""
+      containers:
+        - name: svcwatcher
+          image: registry.gitlab.com/infinitydon/registry/svcwatcher:e5e8b7f6
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--logtostderr"
+      tolerations:
+       - effect: NoSchedule
+         operator: Exists
+       - effect: NoExecute
+         operator: Exists
+      terminationGracePeriodSeconds: 0
