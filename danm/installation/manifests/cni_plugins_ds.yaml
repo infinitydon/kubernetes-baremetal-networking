@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
         - name: danm-cni
-          image: danm-cni-plugins
-          imagePullPolicy: {{ (getenv "IMAGE_PULL_POLICY") }}
+          image: registry.gitlab.com/infinitydon/registry/danm-cni-plugins:e5e8b7f6
           volumeMounts:
             - name: host-cni
               mountPath: /host/cni
