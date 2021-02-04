@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: netwatcher
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      danm.k8s.io: netwatcher
+  template:
+    metadata:
+      labels:
+        danm.k8s.io: netwatcher
+    spec:
+      serviceAccountName: netwatcher
+      hostNetwork: true
+      dnsPolicy: ClusterFirst
+      hostIPC: true
+      hostPID: true
+      containers:
+        - name: netwatcher
+          image: registry.gitlab.com/infinitydon/registry/netwatcher:e5e8b7f6
+          securityContext:
+            capabilities:
+              add:
+                - SYS_PTRACE
+                - SYS_ADMIN
+                - NET_ADMIN
+                - NET_RAW
+      tolerations:
+       - effect: NoSchedule
+         operator: Exists
+       - effect: NoExecute
+         operator: Exists
+      terminationGracePeriodSeconds: 0
