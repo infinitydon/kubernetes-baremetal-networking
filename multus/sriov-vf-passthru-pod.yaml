@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testpod1
+  annotations:
+    k8s.v1.cni.cncf.io/networks: sriov-net1
+spec:
+  nodeSelector:
+    sriov: enabled
+  containers:
+  - image: registry.gitlab.com/infinitydon/registry/nginx-ubuntu-ip-tools
+    name: tool
+    imagePullPolicy: IfNotPresent
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 300000; done;" ]
+    resources:
+      requests:
+        intel.com/intel_pic_passthru_sriov_netdevice: '1'
+      limits:
+        intel.com/intel_pic_passthru_sriov_netdevice: '1'
