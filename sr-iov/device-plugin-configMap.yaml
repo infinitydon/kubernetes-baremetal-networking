@@ -7,11 +7,16 @@ data:
   config.json: |
     {
         "resourceList": [{
-                "resourceName": "intel_sriov_netdevice",
+                "resourceName": "intel_pic_passthru_sriov_netdevice",
                 "selectors": {
-                    "vendors": ["8086"],
-                    "devices": ["154c", "10ed"],
-                    "drivers": ["ixgbevf"]
+                    "pciAddresses": ["0000:06:10.0",
+                                     "0000:06:10.1",
+                                     "0000:06:10.2",
+                                     "0000:06:10.3",
+                                     "0000:06:11.0",
+                                     "0000:06:11.1",
+                                     "0000:06:11.2",
+                                     "0000:06:11.3"]
                 }
             }
         ]
