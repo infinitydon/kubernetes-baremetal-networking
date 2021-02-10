@@ -27,7 +27,8 @@ spec:
     spec:
       hostNetwork: true
       nodeSelector:
-        beta.kubernetes.io/arch: amd64
+        kubernetes.io/arch: amd64
+        sriov: enabled
       tolerations:
       - key: node-role.kubernetes.io/master
         operator: Exists
@@ -69,7 +70,6 @@ spec:
             items:
             - key: config.json
               path: config.json
-
 ---
 apiVersion: apps/v1
 kind: DaemonSet
