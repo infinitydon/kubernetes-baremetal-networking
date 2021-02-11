@@ -5,6 +5,8 @@ metadata:
   annotations:
     k8s.v1.cni.cncf.io/networks: sriov-direct-net
 spec:
+  nodeSelector:
+    kubernetes.io/hostname: proxmox-baremetal  
   containers:
   - name: appcntr1 
     image: centos/tools 
