@@ -11,10 +11,10 @@ spec:
   "name": "sriov-network",
   "ipam": {
     "type": "host-local",
-    "subnet": "10.56.217.0/24",
+    "subnet": "10.57.217.0/24",
     "routes": [{
       "dst": "0.0.0.0/0"
     }],
-    "gateway": "10.56.217.1"
+    "gateway": "10.57.217.1"
   }
 }'
