@@ -6,7 +6,7 @@ metadata:
     k8s.v1.cni.cncf.io/networks: sriov-net1
 spec:
   nodeSelector:
-    sriov: enabled
+    kubernetes.io/hostname: proxmox-vm
   containers:
   - image: registry.gitlab.com/infinitydon/registry/nginx-ubuntu-ip-tools
     name: tool
