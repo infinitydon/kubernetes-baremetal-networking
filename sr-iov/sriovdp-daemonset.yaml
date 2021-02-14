@@ -28,7 +28,6 @@ spec:
       hostNetwork: true
       nodeSelector:
         kubernetes.io/arch: amd64
-        sriov: enabled
       tolerations:
       - key: node-role.kubernetes.io/master
         operator: Exists
